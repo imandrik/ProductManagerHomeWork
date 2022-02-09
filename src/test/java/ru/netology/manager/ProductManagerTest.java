@@ -18,6 +18,7 @@ class ProductManagerTest {
     static Product book1 = new Book(4, "Transhumanism inc", 800, "Victor Pelevin");
     static Product book2 = new Book(5, "The ritual", 600, "Adam Nevill");
     static Product book3 = new Book(6, "Lost Echoes", 700, "Joe Lansdale");
+    static Product book4 = new Book(7, "Apartment 16", 700, "Adam Nevill");
 
     @BeforeAll
     static void setUp() {
@@ -27,6 +28,7 @@ class ProductManagerTest {
         manager.add(book1);
         manager.add(book2);
         manager.add(book3);
+        manager.add(book4);
 
     }
 
@@ -58,6 +60,22 @@ class ProductManagerTest {
     void shouldFindBookAuthor() {
         Product[] expected = {book3};
         Product[] actual = manager.searchBy("Joe Lansdale");
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldFindSeveralBooksByAuthor() {
+        Product[] expected = {book2, book4};
+        Product[] actual = manager.searchBy("Adam Nevill");
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    void shouldFindNoOneBooks() {
+        Product[] expected = {};
+        Product[] actual = manager.searchBy("Ramsey Campbell");
 
         assertArrayEquals(expected, actual);
     }
